@@ -81,7 +81,7 @@ Frontend runs on: `http://localhost:5173`
 
 | Role | Access |
 |---|---|
-| **Admin** | Full access — users, reports, settings, permissions |
+| **Admin** | Full access - users, reports, settings, permissions |
 | **Analyst** | Upload requests, Builder module, Reports |
 | **User** | Dashboard, personal Reports |
 
