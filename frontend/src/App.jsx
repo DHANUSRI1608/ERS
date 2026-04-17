@@ -1,67 +1,63 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import Reports from './pages/Reports';
+import { useState } from 'react';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
-import Navbar from './components/Navbar';
+import Topbar from './components/Topbar';
+import LoginPage from './pages/LoginPage';
+import DashboardPage from './pages/DashboardPage';
+import ReportsPage from './pages/ReportsPage';
+import UploadPage from './pages/UploadPage';
+import BuilderPage from './pages/BuilderPage';
+import AdminPage from './pages/AdminPage';
 
-import Analytics from './pages/Analytics';
-import UserManagement from './pages/UserManagement';
-import Settings from './pages/Settings';
-import AuditLogs from './pages/AuditLogs';
-import DataUpload from './pages/DataUpload';
+function AppInner() {
+  const { user, logout } = useAuth();
+  const [open, setOpen] = useState(true);
+  const location = useLocation();
 
-const PrivateRoute = ({ children }) => {
-  const { user, loading } = useAuth();
-  if (loading) return <div>Loading...</div>;
-  return user ? children : <Navigate to="/login" />;
-};
 
-const RoleRoute = ({ children, allowedRoles }) => {
-  const { user, loading } = useAuth();
-  if (loading) return <div>Loading...</div>;
-  if (!user || !allowedRoles.includes(user.role)) {
-    return <Navigate to="/" />;
-  }
-  return children;
-};
+  const can = p => {
+    if (!user) return true;
+    if (p === 'upload' || p === 'builder') return ['ADMIN', 'ANALYST'].includes(user.role);
+    if (p === 'admin') return user.role === 'ADMIN';
+    return true;
+  };
 
-function App() {
-  const { user } = useAuth();
+  const currentPath = location.pathname.substring(1) || 'dashboard';
+
+  if (!can(currentPath)) return (
+    <div className="flex-center" style={{ height: 300, flexDirection: 'column', gap: 8, color: 'var(--text-muted)' }}>
+      <p style={{ fontSize: 18, fontWeight: 700 }}>Access Restricted</p>
+      <p style={{ fontSize: 14 }}>Your role ({user.role}) cannot access this page.</p>
+    </div>
+  );
 
   return (
-    <div className="flex h-screen bg-slate-50 transition-colors duration-300">
-      {user && <Sidebar />}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {user && <Navbar />}
-        <main className="flex-1 overflow-x-hidden overflow-y-auto p-6">
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+      <Sidebar user={user} open={open} />
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, position: 'relative' }}>
+        {/* Background ambient light */}
+        <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '50%', height: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.1) 0%, rgba(15,23,42,0) 70%)', zIndex: -1, pointerEvents: 'none' }} />
+
+        <Topbar user={user} logout={logout} open={open} setOpen={setOpen} />
+
+        <main className="animate-fade-in" style={{ flex: 1, overflowY: 'auto', padding: 24 }}>
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-            <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
-            
-            {/* Analyst & Admin Routes */}
-            <Route path="/analytics" element={
-              <RoleRoute allowedRoles={['ADMIN', 'ANALYST']}><Analytics /></RoleRoute>
-            } />
-            <Route path="/reports" element={
-              <RoleRoute allowedRoles={['ADMIN', 'ANALYST']}><Reports /></RoleRoute>
-            } />
-            <Route path="/data-upload" element={
-              <RoleRoute allowedRoles={['ADMIN', 'ANALYST', 'EMPLOYEE']}><DataUpload /></RoleRoute>
-            } />
+            {/* Public route */}
+            <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/dashboard" />} />
 
-            {/* Admin Only Routes */}
-            <Route path="/users" element={
-              <RoleRoute allowedRoles={['ADMIN']}><UserManagement /></RoleRoute>
-            } />
-            <Route path="/audit" element={
-              <RoleRoute allowedRoles={['ADMIN']}><AuditLogs /></RoleRoute>
-            } />
+            {/* Protected routes */}
+            <Route path="/dashboard" element={user ? <DashboardPage /> : <Navigate to="/login" />} />
+            <Route path="/reports" element={user ? <ReportsPage /> : <Navigate to="/login" />} />
+            <Route path="/upload" element={user ? <UploadPage /> : <Navigate to="/login" />} />
+            <Route path="/builder" element={user ? <BuilderPage /> : <Navigate to="/login" />} />
+            <Route path="/admin" element={user ? <AdminPage /> : <Navigate to="/login" />} />
 
-            <Route path="*" element={<Navigate to="/" />} />
+            {/* Default route */}
+            <Route path="/" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
+
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
           </Routes>
         </main>
       </div>
@@ -69,4 +65,10 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppInner />
+    </AuthProvider>
+  );
+}
