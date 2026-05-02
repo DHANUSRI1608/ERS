@@ -19,9 +19,9 @@ export default function Sidebar({ user, open }) {
   const currentPath = location.pathname.substring(1) || 'dashboard';
 
   return (
-    <aside style={{ width: open ? 220 : 70, flexShrink: 0, display: 'flex', flexDirection: 'column', transition: 'width var(--transition-normal)', borderRight: '1px solid var(--border-light)', background: 'var(--bg-glass)', backdropFilter: 'blur(10px)' }}>
+    <aside className="sidebar" style={{ width: open ? 220 : 70 }}>
       {/* Logo */}
-      <div style={{ height: 64, display: 'flex', alignItems: 'center', padding: '0 16px', borderBottom: '1px solid var(--border-light)', gap: 12, flexShrink: 0 }}>
+      <div className="logo">
         <div style={{ width: 36, height: 36, borderRadius: 12, background: 'linear-gradient(135deg, var(--primary-accent), #8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: 'var(--shadow-md)' }}>
           <Icon name="chart" size={18} style={{ color: '#fff' }} />
         </div>
@@ -29,15 +29,11 @@ export default function Sidebar({ user, open }) {
       </div>
 
       {/* Nav items */}
-      <nav style={{ flex: 1, padding: '16px 12px', display: 'flex', flexDirection: 'column', gap: 4, overflowY: 'auto' }}>
+      <nav className="sidebar-nav">
         {items.map(item => {
           const active = currentPath === item.id;
           return (
-            <button key={item.id} onClick={() => navigate(`/${item.id}`)}
-              style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px', borderRadius: 'var(--radius-md)', border: 'none', cursor: 'pointer', background: active ? 'rgba(59, 130, 246, 0.15)' : 'transparent', color: active ? 'var(--primary-accent)' : 'var(--text-secondary)', fontWeight: active ? 600 : 500, fontSize: 14, transition: 'all var(--transition-fast)', width: '100%', textAlign: 'left', whiteSpace: 'nowrap', overflow: 'hidden' }}
-              onMouseOver={(e) => { if (!active) { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = 'var(--text-primary)'; } }}
-              onMouseOut={(e) => { if (!active) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-secondary)'; } }}
-            >
+            <button key={item.id} onClick={() => navigate(`/${item.id}`)} className={`sidebar-item ${active ? 'active' : ''}`}>
               <Icon name={item.icon} size={20} style={{ flexShrink: 0 }} />
               {open && <span style={{ flex: 1 }}>{item.label}</span>}
               {open && active && <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--primary-accent)', flexShrink: 0, boxShadow: '0 0 8px var(--primary-accent)' }} />}
@@ -47,7 +43,7 @@ export default function Sidebar({ user, open }) {
       </nav>
 
       {/* User info */}
-      <div style={{ padding: 16, borderTop: '1px solid var(--border-light)', flexShrink: 0, background: 'rgba(0,0,0,0.1)' }}>
+      <div className="sidebar-user">
         {open ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px', borderRadius: 'var(--radius-md)', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-light)' }}>
             <Avatar name={user.name} size={36} />

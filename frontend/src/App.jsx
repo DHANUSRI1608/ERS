@@ -33,12 +33,9 @@ function AppInner() {
   );
 
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+    <div className="app-shell" style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
       <Sidebar user={user} open={open} />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, position: 'relative' }}>
-        {/* Background ambient light */}
-        <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '50%', height: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.1) 0%, rgba(15,23,42,0) 70%)', zIndex: -1, pointerEvents: 'none' }} />
-
         <Topbar user={user} logout={logout} open={open} setOpen={setOpen} />
 
         <main className="animate-fade-in" style={{ flex: 1, overflowY: 'auto', padding: 24 }}>
