@@ -7,7 +7,7 @@ export default function Topbar({ user, logout, open, setOpen }) {
   return (
     <header className="topbar">
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-        <button onClick={() => setOpen(!open)} className="btn-secondary" style={{ padding: 8, minWidth: 40, minHeight: 40 }}>
+        <button onClick={() => setOpen(!open)} className="btn-secondary menu-btn" aria-label="Toggle sidebar" style={{ padding: 8, minWidth: 40, minHeight: 40 }}>
           <Icon name="menu" size={20} />
         </button>
         <div className="topbar-search">

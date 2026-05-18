@@ -233,6 +233,32 @@ svg {
   backdrop-filter: blur(16px);
 }
 
+/* Collapsed sidebar state */
+.sidebar.collapsed {
+  width: 70px;
+}
+.sidebar {
+  width: 220px;
+}
+
+/* Menu button micro-interaction */
+.menu-btn {
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+.menu-btn:hover { transform: translateY(-2px); }
+
+/* Login page responsive grid */
+.login-grid { display:flex; min-height:100vh; }
+.login-grid .login-left { flex:1; display:flex; align-items:center; justify-content:center; padding:64px; position:relative; }
+.login-grid .login-right { flex:1; max-width:440px; display:flex; align-items:center; justify-content:center; padding:32px; }
+
+@media (max-width: 900px) {
+  .login-grid { flex-direction: column-reverse; }
+  .login-grid .login-left, .login-grid .login-right { padding:20px; max-width:100%; }
+  .login-grid .login-left { order:2; }
+  .login-grid .login-right { order:1; }
+}
+
 .sidebar .logo {
   height: 64px;
   display: flex;

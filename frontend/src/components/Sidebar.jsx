@@ -19,7 +19,7 @@ export default function Sidebar({ user, open }) {
   const currentPath = location.pathname.substring(1) || 'dashboard';
 
   return (
-    <aside className="sidebar" style={{ width: open ? 220 : 70 }}>
+    <aside className={`sidebar ${open ? '' : 'collapsed'}`}>
       {/* Logo */}
       <div className="logo">
         <div style={{ width: 36, height: 36, borderRadius: 12, background: 'linear-gradient(135deg, var(--primary-accent), #8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: 'var(--shadow-md)' }}>
@@ -33,7 +33,7 @@ export default function Sidebar({ user, open }) {
         {items.map(item => {
           const active = currentPath === item.id;
           return (
-            <button key={item.id} onClick={() => navigate(`/${item.id}`)} className={`sidebar-item ${active ? 'active' : ''}`}>
+            <button key={item.id} onClick={() => navigate(`/${item.id}`)} className={`sidebar-item ${active ? 'active' : ''}`} title={!open ? item.label : undefined} aria-label={item.label}>
               <Icon name={item.icon} size={20} style={{ flexShrink: 0 }} />
               {open && <span style={{ flex: 1 }}>{item.label}</span>}
               {open && active && <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--primary-accent)', flexShrink: 0, boxShadow: '0 0 8px var(--primary-accent)' }} />}

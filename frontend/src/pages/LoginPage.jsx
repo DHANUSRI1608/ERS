@@ -24,10 +24,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ minHeight:'100vh', display:'flex', background:'linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#0f172a 100%)', fontFamily:"'DM Sans',sans-serif" }}>
+    <div className="login-grid" style={{ minHeight:'100vh', background:'linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#0f172a 100%)', fontFamily:"'DM Sans',sans-serif" }}>
 
       {/* Left panel */}
-      <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', padding:64, position:'relative', overflow:'hidden' }}>
+      <div className="login-left" style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', padding:64, position:'relative', overflow:'hidden' }}>
         <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at 30% 50%,rgba(99,102,241,.18) 0%,transparent 65%)' }} />
         <div style={{ position:'relative', maxWidth:460 }}>
           <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:48 }}>
@@ -61,7 +61,7 @@ export default function LoginPage() {
       </div>
 
       {/* Right panel */}
-      <div style={{ flex:1, maxWidth:440, display:'flex', alignItems:'center', justifyContent:'center', padding:32 }}>
+      <div className="login-right" style={{ flex:1, maxWidth:440, display:'flex', alignItems:'center', justifyContent:'center', padding:32 }}>
         <div style={{ width:'100%', maxWidth:360 }}>
           <div style={{ background:'rgba(255,255,255,.06)', backdropFilter:'blur(20px)', border:'1px solid rgba(255,255,255,.1)', borderRadius:24, padding:32, boxShadow:'0 24px 64px rgba(0,0,0,.3)' }}>
             <h2 style={{ fontSize:22, fontWeight:800, color:'#fff', marginBottom:6 }}>Sign in</h2>
