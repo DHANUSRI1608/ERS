@@ -12,7 +12,9 @@ export default function Topbar({ user, logout, open, setOpen }) {
         </button>
         <div className="topbar-search">
           <Icon name="search" size={16} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
-          <input placeholder="Search enterprise resources..." />
+          <input
+            style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: 14, color: 'var(--text-primary)', width: '100%' }}
+            placeholder="Search enterprise resources..." />
         </div>
       </div>
 
@@ -58,9 +60,10 @@ export default function Topbar({ user, logout, open, setOpen }) {
             <p style={{ fontSize: 12, color: 'var(--text-muted)', margin: 0 }}>{user.department}</p>
           </div>
           <Avatar name={user.name} size={40} />
-          <button onClick={logout} title="Secure Logout" className="logout-btn"
+          <button onClick={logout} title="Secure Logout"
+            style={{ width: 40, height: 40, borderRadius: 'var(--radius-md)', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--accent-danger)', marginLeft: 8, transition: 'all var(--transition-fast)' }}
             onMouseOver={e => { e.currentTarget.style.background = 'var(--accent-danger)'; e.currentTarget.style.color = '#fff'; }}
-            onMouseOut={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = 'var(--text-primary)'; }}
+            onMouseOut={e => { e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'; e.currentTarget.style.color = 'var(--accent-danger)'; }}
           >
             <Icon name="logout" size={16} />
           </button>
