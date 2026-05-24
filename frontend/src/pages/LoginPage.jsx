@@ -29,7 +29,7 @@ export default function LoginPage() {
       {/* Left panel */}
       <div className="login-left" style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', padding:64, position:'relative', overflow:'hidden' }}>
         <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at 30% 50%,rgba(99,102,241,.18) 0%,transparent 65%)' }} />
-        <div style={{ position:'relative', maxWidth:460 }}>
+        <div className="login-hero" style={{ maxWidth:460 }}>
           <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:48 }}>
             <div style={{ width:42, height:42, borderRadius:12, background:'linear-gradient(135deg,#3b82f6,#8b5cf6)', display:'flex', alignItems:'center', justifyContent:'center' }}>
               <Icon name="chart" size={22} style={{ color:'#fff' }} />
@@ -50,8 +50,8 @@ export default function LoginPage() {
             { icon:'dashboard', text:'Live KPI dashboards from real DB data' },
             { icon:'users',     text:'Role-based access: Admin · Analyst · Employee' },
           ].map(f => (
-            <div key={f.icon} style={{ display:'flex', alignItems:'center', gap:12, marginBottom:14 }}>
-              <div style={{ width:32, height:32, borderRadius:8, background:'rgba(255,255,255,.08)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, color:'#cbd5e1' }}>
+            <div key={f.icon} className="login-feature">
+              <div className="login-feature-icon">
                 <Icon name={f.icon} size={15} />
               </div>
               <span style={{ fontSize:14, color:'#cbd5e1' }}>{f.text}</span>
@@ -63,7 +63,7 @@ export default function LoginPage() {
       {/* Right panel */}
       <div className="login-right" style={{ flex:1, maxWidth:440, display:'flex', alignItems:'center', justifyContent:'center', padding:32 }}>
         <div style={{ width:'100%', maxWidth:360 }}>
-          <div style={{ background:'rgba(255,255,255,.06)', backdropFilter:'blur(20px)', border:'1px solid rgba(255,255,255,.1)', borderRadius:24, padding:32, boxShadow:'0 24px 64px rgba(0,0,0,.3)' }}>
+          <div className="login-card">
             <h2 style={{ fontSize:22, fontWeight:800, color:'#fff', marginBottom:6 }}>Sign in</h2>
             <p style={{ fontSize:13, color:'#94a3b8', marginBottom:24 }}>Access your reporting workspace</p>
 
@@ -97,8 +97,8 @@ export default function LoginPage() {
             </button>
 
             {/* Quick demo login */}
-            <div style={{ marginTop:20, padding:14, borderRadius:14, background:'rgba(59,130,246,.1)', border:'1px solid rgba(59,130,246,.2)' }}>
-              <p style={{ fontSize:11, fontWeight:700, color:'#60a5fa', marginBottom:10 }}>⚡ Quick Demo Login</p>
+            <div className="quick-login">
+              <strong>⚡ Quick Demo Login</strong>
               <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
                 {QUICK.map(q => (
                   <button key={q.label} onClick={() => doLogin(q.email, q.pw)} disabled={loading}
